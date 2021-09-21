@@ -1,3 +1,5 @@
+#include "./common_types.mligo"
+
 (* Pick one of CASH_IS_TEZ, CASH_IS_FA2, CASH_IS_FA12. tokenToToken isn't supported for CASH_IS_FA12 *)
 //#define CASH_IS_TEZ
 //#define CASH_IS_FA2
@@ -139,6 +141,7 @@ type storage =
     lastOracleUpdate : timestamp ;
     consumerEntrypoint : address ;
 #endif
+    metadata : contract_metadata ;
   }
 
 (*  Type Synonyms *)
