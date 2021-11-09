@@ -76,7 +76,7 @@ const Swap: React.FC = () => {
     () => ({
       slippage: Number(slippage),
       deadline: Number(deadlineFromStore),
-      amount: undefined,
+      amount: '',
     }),
     [deadlineFromStore, slippage],
   );

@@ -58,7 +58,7 @@ const AddLiquidity: React.FC = () => {
   const initialValues: IAddLiquidityForm = {
     slippage: Number(slippage),
     deadline: Number(deadlineFromStore),
-    amount: undefined,
+    amount: '',
     ctezAmount: undefined,
   };
 

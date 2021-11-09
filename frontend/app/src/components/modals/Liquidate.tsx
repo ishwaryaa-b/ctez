@@ -25,7 +25,7 @@ import { inputFormatNumberStandard } from '../../utils/numbers';
 
 interface LiquidateForm {
   ovenOwner: string;
-  amount: number;
+  amount: number | '';
   to: string;
 }
 interface ILiquidateProps {
@@ -43,7 +43,7 @@ const LiquidateOven: React.FC<ILiquidateProps> = ({ isOpen, onClose, oven }) => 
   const { t } = useTranslation(['common']);
   const initialValues: LiquidateForm = {
     ovenOwner: oven?.key.owner ?? '',
-    amount: 0,
+    amount: '',
     to: userAddress ?? '',
   };
 
