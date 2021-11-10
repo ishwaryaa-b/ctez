@@ -8,7 +8,7 @@ import { ReactComponent as MyOvens } from '../../assets/images/sidebar/myovens.s
 import { ReactComponent as Trade } from '../../assets/images/sidebar/trade.svg';
 import { ReactComponent as Faq } from '../../assets/images/sidebar/faq.svg';
 import Button from '../button';
-import { SignIn } from '../SignIn/SignIn';
+import SignIn from '../SignIn';
 import { useThemeColors } from '../../hooks/utilHooks';
 
 export interface IHeaderProps {

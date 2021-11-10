@@ -18,7 +18,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useCallback } from 'react';
-import { Button } from '../button/Button';
+import Button from '../button';
 import { trimAddress } from '../../utils/addressUtils';
 import { useWallet } from '../../wallet/hooks';
 import { getBeaconInstance } from '../../wallet';

@@ -25,7 +25,7 @@ import { useFormik } from 'formik';
 import { useWallet } from '../../wallet/hooks';
 import { IWithdrawForm } from '../../constants/oven-operations';
 import { cTezError, withdraw } from '../../contracts/ctez';
-import { Button } from '../button/Button';
+import Button from '../button';
 import { TezIcon } from '../icons';
 import { BUTTON_TXT } from '../../constants/swap';
 import { AllOvenDatum } from '../../interfaces';

@@ -25,9 +25,9 @@ import { Depositor } from '../../interfaces';
 import { create, cTezError } from '../../contracts/ctez';
 import { useWallet } from '../../wallet/hooks';
 import { logger } from '../../utils/logger';
-import { RadioCard } from '../radio/RadioCard';
-import { Button } from '../button/Button';
-import { DepositorsInput } from '../input/DepositorsInput';
+import RadioCard from '../radio';
+import Button from '../button';
+import DepositorsInput from '../input';
 import { useBakerSelect, useTxLoader, useThemeColors } from '../../hooks/utilHooks';
 import { inputFormatNumberStandard } from '../../utils/numbers';
 
