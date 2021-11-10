@@ -91,7 +91,7 @@ const Burn: React.FC<IBurnProps> = ({ isOpen, onClose, oven }) => {
       })
       .required(t('required')),
   });
-  const initialValues: any = {
+  const initialValues: IMintRepayForm = {
     amount: '',
   };
 
