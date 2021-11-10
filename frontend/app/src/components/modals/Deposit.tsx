@@ -23,8 +23,7 @@ import { IDepositForm } from '../../constants/oven-operations';
 import { BUTTON_TXT } from '../../constants/swap';
 import { cTezError, deposit } from '../../contracts/ctez';
 import { logger } from '../../utils/logger';
-
-import Button from '../button/Button';
+import { Button } from '../button/Button';
 import { TezIcon } from '../icons';
 import { AllOvenDatum } from '../../interfaces';
 import { useThemeColors, useTxLoader } from '../../hooks/utilHooks';

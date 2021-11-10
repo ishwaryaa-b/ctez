@@ -17,7 +17,7 @@ import { validateAddress } from '@taquito/utils';
 import { number, object, string } from 'yup';
 import { useFormik } from 'formik';
 import { cTezError, liquidate } from '../../contracts/ctez';
-import Button from '../button/Button';
+import { Button } from '../button/Button';
 import { AllOvenDatum } from '../../interfaces';
 import { useThemeColors, useTxLoader } from '../../hooks/utilHooks';
 import { useWallet } from '../../wallet/hooks';
