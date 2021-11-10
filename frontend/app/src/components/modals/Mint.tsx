@@ -102,14 +102,14 @@ const Mint: React.FC<IMintProps> = ({ isOpen, onClose, oven }) => {
       .required(t('required')),
   });
   const initialValues: IMintRepayForm = {
-    amount: 0,
+    amount: '',
   };
 
   const handleFormSubmit = async (data: IMintRepayForm) => {
     if (oven?.key.id) {
       try {
         const amount = data?.amount;
-        const result = await mintOrBurn(Number(oven.key.id), amount);
+        const result = await mintOrBurn(Number(oven.key.id), Number(amount));
         handleProcessing(result);
         onClose();
       } catch (error) {

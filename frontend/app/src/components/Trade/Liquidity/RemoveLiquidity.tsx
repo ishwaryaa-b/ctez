@@ -62,7 +62,7 @@ const RemoveLiquidity: React.FC = () => {
   );
 
   const initialValues: IRemoveLiquidityForm = {
-    lqtBurned: 0,
+    lqtBurned: '',
     deadline: Number(deadlineFromStore),
     slippage: Number(slippage),
   };
@@ -85,7 +85,7 @@ const RemoveLiquidity: React.FC = () => {
         const data: RemoveLiquidityParams = {
           deadline,
           to: userAddress,
-          lqtBurned: formData.lqtBurned * 1e6,
+          lqtBurned: Number(formData.lqtBurned) * 1e6,
           minCashWithdrawn: otherValues.cashWithdraw,
           minTokensWithdrawn: otherValues.tokenWithdraw,
         };
