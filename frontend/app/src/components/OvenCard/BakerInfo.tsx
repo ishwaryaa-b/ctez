@@ -9,7 +9,7 @@ import { useDelegates, useOvenDelegate } from '../../api/queries';
 import { useWallet } from '../../wallet/hooks';
 import Button from '../button';
 import { cTezError, delegate } from '../../contracts/ctez';
-import { Identicon } from '../avatar/Identicon';
+import Identicon from '../avatar';
 import { AllOvenDatum } from '../../interfaces';
 import SkeletonLayout from '../skeleton';
 import data from '../../assets/data/info.json';

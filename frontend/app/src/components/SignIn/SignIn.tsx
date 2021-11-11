@@ -25,7 +25,7 @@ import { getBeaconInstance } from '../../wallet';
 import { APP_NAME, NETWORK } from '../../utils/globals';
 import { setWalletProvider } from '../../contracts/client';
 import { useUserBalance, useUserLqtData } from '../../api/queries';
-import { Identicon } from '../avatar/Identicon';
+import Identicon from '../avatar';
 import { formatNumber as formatNumberUtil, formatNumberStandard } from '../../utils/numbers';
 import { ReactComponent as copy } from '../../assets/images/sidebar/content_copy.svg';
 

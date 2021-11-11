@@ -5,7 +5,7 @@ import { MdEdit, MdInfo } from 'react-icons/md';
 import { useOvenDelegate, useOvenStorage } from '../../api/queries';
 import { useWallet } from '../../wallet/hooks';
 import Button from '../button';
-import { Identicon } from '../avatar/Identicon';
+import Identicon from '../avatar';
 import ChangeDepositor from '../modals/ChangeDepositor';
 import { AllOvenDatum } from '../../interfaces';
 import SkeletonLayout from '../skeleton';
