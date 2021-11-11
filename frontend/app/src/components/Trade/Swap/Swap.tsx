@@ -29,7 +29,7 @@ import { CTezIcon, TezIcon } from '../../icons';
 import { cashToToken, cfmmError, tokenToCash } from '../../../contracts/cfmm';
 import { logger } from '../../../utils/logger';
 import { useAppSelector } from '../../../redux/store';
-import Button from '../../button/Button';
+import Button from '../../button';
 import { useThemeColors, useTxLoader } from '../../../hooks/utilHooks';
 import { formatNumberStandard, inputFormatNumberStandard } from '../../../utils/numbers';
 
