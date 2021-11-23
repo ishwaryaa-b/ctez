@@ -3,56 +3,123 @@ import time
 import requests
 import json
 from dateutil import parser
+import shutil
 
-database = "outfile.json"
-url = "https://api.better-call.dev/v1/contract/mainnet/KT1GWnsoFZVHGh7roXEER3qeCcgJgrXT3de2/storage"
+
+def block_start_get():
+    try:
+        start = read_input()["stats"]["last_block"]
+    except:
+        start = 1793972
+    print(f"Start block: {start}")
+    return start
+
+
+def write_output(data):
+    try:
+        shutil.copy("database.json", "database.json.backup")
+    except Exception as e:
+        print(f"Backup failed: {e}")
+
+    with open("database.json", "w+") as outfile:
+        outfile.write(json.dumps(data))
+
+
+def block_last_get():
+    url_stats = "https://api.better-call.dev/v1/stats"
+    stats_parsed = requests.get(url_stats)
+    stats_parsed_json = json.loads(stats_parsed.text)
+    for entry in stats_parsed_json:
+        if entry["network"] == "mainnet":
+            print(f"Last block: {entry['level']}")
+            return entry["level"]
+
 
 def read_input():
     try:
-        with open(database, "r+") as infile:
+        with open("database.json", "r+") as infile:
             input_dict = json.loads(infile.read())
     except Exception as e:
         print(f"Error: {e}")
-        input_dict = {}
+        input_dict = get_clear_dict()
     return input_dict
 
-def collect():
-    try:
-        parsed = requests.get(url)
 
-        parsed_json = json.loads(parsed.text)[0]
+def get_clear_dict(dict_in={}):
+    dict_in.clear()
+    dict_out = {"data": {},
+                "stats": {}
+                }
+    return dict_out
 
-        print(parsed_json)
 
-        drift_timestamp_raw = parsed_json["children"][3]
-        drift_timestamp = str(parser.parse(drift_timestamp_raw["value"]))
+def merge_save(output_dict):
+    print("Saving...")
+    input_dict = read_input()
 
-        drift_value_raw = parsed_json["children"][2]
-        drift_value = drift_value_raw["value"]
+    merged_data = {**input_dict["data"], **output_dict["data"]}
+    merged_stats = output_dict["stats"]
 
-        target_value_raw = parsed_json["children"][5]
-        target_value = target_value_raw["value"]
+    print(f'Last block (to save): {output_dict["stats"]["last_block"]}')
 
-        print(target_value)
-        target_value_pct = round(math.exp(int(target_value) * 365 * 24 * 3600 / 2 ** 48) - 1, 10)
-        print(target_value_pct)
+    merged = {"data": merged_data, "stats": merged_stats}
 
-        # e^(51410×365×24×3600÷2^48)−1
-        drift_value_pct = round(math.exp(int(drift_value) * 365 * 24 * 3600 / 2 ** 48) - 1, 10)
+    print(f"Total of {len(merged_data)} data entries")
+    write_output(merged)
 
-        output_dict = {drift_timestamp: drift_value_pct}
 
-        input_dict = read_input()
+def collect(block_start, block_last):
+    if block_start >= block_last:
+        print("No new data, skipping run")
+        return
 
-        merged = {**input_dict, **output_dict}
+    output_dict = get_clear_dict()
 
-        print(f"Merged {input_dict} with {output_dict} into {merged}")
+    print(f"Started processing range of {block_start} - {block_last}")
+    for level in range(block_start, block_last + 1):  # +1 to include in range
+        print(f"Processing block {level}")
+        while True:
+            try:
+                url = f"https://api.better-call.dev/v1/contract/mainnet/KT1GWnsoFZVHGh7roXEER3qeCcgJgrXT3de2/storage?level={level}"
+                # origination = 1793972
 
-        with open(database, "w+") as outfile:
-            outfile.write(json.dumps(merged))
+                parsed = requests.get(url)
 
-    except Exception as e:
-        print(f"Failed to fetch data: {e}")
+                parsed_json = json.loads(parsed.text)[0]
+
+                drift_timestamp_raw = parsed_json["children"][3]
+                drift_timestamp = str(parser.parse(drift_timestamp_raw["value"]))
+
+                drift_value = parsed_json["children"][2]["value"]
+
+                target_value = parsed_json["children"][6]["value"]
+
+                target_value_pct = int(target_value) / 2 ** 48
+
+                # e^(51410×365×24×3600÷2^48)−1
+                drift_value_pct = math.exp(int(drift_value) * 365 * 24 * 3600 / 2 ** 48) - 1
+
+                output_dict["data"][level] = {
+                    "drift": drift_value_pct,
+                    "timestamp": drift_timestamp,
+                    "target": target_value_pct}
+
+                output_dict["stats"]["last_block"] = level
+
+                if level % 1000 == 0:
+                    merge_save(output_dict)
+                    # output_dict = get_clear_dict()
+
+                break
+
+            except Exception as e:
+                print(f"Failed: {e}")
+
+    merge_save(output_dict)  # save at the end
+    print(f"Finished processing range of {block_start} - {block_last}")
+
 
 if __name__ == "__main__":
-    collect()
+    # block_start = 1793972
+    collect(block_last=block_last_get(),
+            block_start=block_start_get())
