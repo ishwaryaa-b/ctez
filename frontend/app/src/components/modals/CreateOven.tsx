@@ -179,9 +179,6 @@ const CreateOven: React.FC<ICreateOvenProps> = ({ isOpen, onClose }) => {
   useEffect(() => {
     formik.setFieldValue('depositors', userAddress ? getDefaultDepositorList(values.delegate) : []);
   }, [userAddress, values.delegate]);
-  // useEffect(() => {
-  //   formik.setFieldValue('depositors', userAddress ? getDefaultDepositorList(values.delegate) : []);
-  // }, [userAddress, values.depositType]);
 
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'depositType',
